@@ -1,0 +1,143 @@
+#:import Factory kivy.factory.Factory
+
+<CustButton@Button>:
+	font_size: min(root.parent.height/8, 16)
+	size_hint_x: None
+	size_hint_y: None
+
+<CustLabel@Label>
+	font_size: min(root.height/6, root.width/2)
+	size_hint_y: None
+	size_hint_x: None
+
+<CustTextInput@TextInput>
+	size_hint_y: None
+	size_hint_x: None
+	height: 35
+	row: 1
+	col: 1
+	font_size: min(root.parent.height/8, 15)
+	multiline: False
+
+<BackgroundColor@Widget>
+    background_color: .1, .97, .86, 0.58
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<BackgroundLabel@Label+BackgroundColor>
+
+
+<SearchFloatLayout>:
+	id: mainwidget
+	mainwidget: mainwidget
+    #search_in_folder_text_input: search_in_folder
+	display: search_phrase
+	gridlaj: gridlaj
+	selection_text: selection_text
+
+	CustLabel:
+		text: "Search phrase :"
+		x: 10
+		y: root.height - 100
+
+	BackgroundLabel:
+
+	CustTextInput:
+		id: search_phrase
+		x: min(120, root.width/6.7)
+		y: root.height - 70
+		width: root.width - root.width/6.7 - root.width/10
+	
+	CustButton:
+		text: "Search"
+		width: root.width/10 - 3
+		height: 37
+		x: root.width - root.width/10
+		y: root.height - 70
+		on_press: 
+			mainwidget.get_phrase_on_button_press(search_phrase.text)
+			file_chooser.disabled = True
+		on_release: 
+			mainwidget.search_on_button_release(list_of_items.text)
+			file_chooser.disabled = False
+
+	GridLayout:
+		rows: 1
+		
+		BoxLayout:
+			size_hint_y: None
+			height: 30
+			spacing: 10
+			
+			canvas:
+				Color:
+					rgba: .1, .1, .1, .1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			Button:
+				background_normal: 'exit.png'
+				background_down: 'exit_dn.png'
+				size_hint_x: None
+				width: 30
+    			on_press: app.stop()
+
+
+	GridLayout:
+		id: gridlaj
+		file_chooser: file_chooser
+		top: 20
+        cols: 1
+		rows: 3
+        spacing: '1dp'
+		list_of_found_items: list_of_items
+		layout_future_buttons: layout_future_buttons
+
+		FileChooser:
+			id: file_chooser
+			size_hint_x: None
+			size_hint_y: None
+			width: root.width - 2
+			height: max(root.height *.2, 90)
+			dirselect: True
+			FileChooserListLayout
+
+    	RstDocument:
+			id: list_of_items
+			size_hint_x: None
+			size_hint_y: None
+			width: root.width
+			height: max(root.height *.2, 210)
+			base_font_size: 25
+			background_color: .1, .97, .86, 0.58
+			bar_inactive_color: 1, 1, 1, 1
+			bar_color: 1, 1, 1, 1
+			bar_width: 4
+
+		GridLayout:
+			id: layout_future_buttons
+			spacing: '1dp'
+			size_hint_x: 1
+			size_hint_y: 1
+			height: max(root.height*.6 , 250)
+			cols: int(root.width / 30)
+			width: root.width
+
+
+	CustLabel:
+		id: choosedrivelabel
+		x: 100
+		y: root.height - 65
+		text: "Choose drive:"
+
+	CustLabel:
+		id: selection_text
+		x: 490
+		y: root.height - 65
+		font_size: '14sp'
+		shorten: 3 
+		max_lines: 2
