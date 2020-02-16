@@ -16,7 +16,7 @@ Application is meant to save time when searching for phrases in many or big pdf 
 
 GUI is done with Kivy (maybe not the best for this use case but good enough).
 
-Requires: PyPDF3, Kivy 1.9.0, standard lib with Python 3.8
+Requires: PyPDF3, Kivy 1.9.0, standard lib with Python 3.8, requires also some refactoring ;)
 
 Written for Windows, Python 3.8.
 
